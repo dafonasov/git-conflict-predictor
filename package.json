@@ -1,0 +1,107 @@
+{
+  "name": "git-conflict-predictor",
+  "displayName": "Git Conflict Predictor",
+  "publisher": "DmitriiAfonasov",
+  "description": "Proactively warns about potential merge conflicts while you code",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "gitConflictPredictor.toggle",
+        "title": "Toggle Conflict Prediction",
+        "category": "Git Conflict Predictor"
+      },
+      {
+        "command": "gitConflictPredictor.showConflicts",
+        "title": "Show All Conflicts",
+        "category": "Git Conflict Predictor"
+      },
+      {
+        "command": "gitConflictPredictor.configureBranches",
+        "title": "Configure Tracked Branches",
+        "category": "Git Conflict Predictor"
+      },
+      {
+        "command": "gitConflictPredictor.toggleBranch",
+        "title": "Toggle Branch Tracking",
+        "category": "Git Conflict Predictor"
+      }
+    ],
+    "configuration": {
+      "title": "Git Conflict Predictor",
+      "properties": {
+        "gitConflictPredictor.trackedBranches": {
+          "type": "array",
+          "default": [
+            "main",
+            "develop"
+          ],
+          "description": "Branches to track for potential conflicts"
+        },
+        "gitConflictPredictor.fetchInterval": {
+          "type": "number",
+          "default": 300,
+          "description": "Interval for background fetching (in seconds)"
+        },
+        "gitConflictPredictor.enableHoverTips": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable hover tips showing conflict details"
+        },
+        "gitConflictPredictor.debounceDelay": {
+          "type": "number",
+          "default": 1500,
+          "description": "Delay before checking for conflicts after typing (in milliseconds)"
+        }
+      }
+    },
+    "views": {
+      "git-conflict-predictor": [
+        {
+          "id": "branchTracker",
+          "name": "Tracked Branches",
+          "when": "true"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "branchTracker",
+        "contents": "No branches available. [Refresh](command:gitConflictPredictor.configureBranches)"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/diff": "^7.0.2",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.60.0",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
+    "eslint": "^8.20.0",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "diff": "^5.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dafonasov/git-conflict-predictor.git"
+  },
+  "icon": "images/icon.png"
+}
